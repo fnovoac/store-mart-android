@@ -17,7 +17,7 @@ import com.shop_mart.model.ShopModel;
 import java.util.List;
 
 /**
- * Created by funmi on 28/07/2017.
+ * Created by parallels on 11/3/17.
  */
 
 public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopHolder> {
@@ -27,12 +27,13 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopHolder> {
 
 
     public class ShopHolder extends RecyclerView.ViewHolder {
-        public TextView title, description, orderPlacedItems, streetNameText;
+        public TextView title, description, streetNameText;
         public ShopHolder(View itemView) {
             super(itemView);
 
             title = (TextView) itemView.findViewById(R.id.title);
             description = (TextView) itemView.findViewById(R.id.description);
+            streetNameText = (TextView) itemView.findViewById(R.id.streetNameText);
 
         }
     }
@@ -53,7 +54,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopHolder> {
         final ShopModel orderHistoryModel = orderHistoryModelList.get(position);
         holder.title.setText(orderHistoryModel.getTitle());
         holder.description.setText(orderHistoryModel.getDescription());
-//        holder.streetNameText.setText(orderHistoryModel.getStreetName());
+        holder.streetNameText.setText(orderHistoryModel.getStreetName());
 
     }
 

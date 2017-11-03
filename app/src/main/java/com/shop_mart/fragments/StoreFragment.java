@@ -41,7 +41,6 @@ public class StoreFragment extends Fragment {
     private List<ShopModel> shopModelList;
     private ShopAdapter adapter;
     private EmptyRecyclerView recyclerView;
-    private TextView nothingToShowTxt;
 
     public StoreFragment() {}
     @Override
@@ -52,7 +51,6 @@ public class StoreFragment extends Fragment {
         shopModelList = new ArrayList<>();
 
         recyclerView = (EmptyRecyclerView) v.findViewById(R.id.recycler_view);
-        nothingToShowTxt = (TextView) v.findViewById(R.id.nothingToShowTxt);
 
         adapter = new ShopAdapter(getActivity(), shopModelList);
 
