@@ -3,7 +3,6 @@ package com.shop_mart.activities;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -14,9 +13,8 @@ import android.support.v7.widget.Toolbar;
 
 import com.shop_mart.R;
 import com.shop_mart.adapters.TabAdapter;
-import com.shop_mart.fragments.HomeFragment;
+import com.shop_mart.fragments.StoreFragment;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
@@ -41,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        String username = getIntent().getStringExtra("username");
+        String email = getIntent().getStringExtra("email");
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -52,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private void setViewPageAdapter(ViewPager viewPager){
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
-        adapter.addFragment(new HomeFragment(),"Map View");
-        adapter.addFragment(new HomeFragment(),"Store list");
+        adapter.addFragment(new StoreFragment(),"Map View");
+        adapter.addFragment(new StoreFragment(),"Store list");
         viewPager.setAdapter(adapter);
     }
 

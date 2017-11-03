@@ -44,7 +44,7 @@
                 android:inputType="text"
                 android:textColorHint="@color/hint_color" />
             <EditText
-                android:id="@+id/emaildEdt"
+                android:id="@+id/emailEdt"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
                 android:gravity="center"
@@ -52,7 +52,7 @@
                 android:background="@drawable/border_btn"
                 android:hint="Enter email"
                 android:textColor="@color/hint_color"
-                android:inputType="textPassword"
+                android:inputType="textEmailAddress"
                 android:textColorHint="@color/hint_color" />
             <EditText
                 android:id="@+id/passwordEdt"

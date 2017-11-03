@@ -17,10 +17,12 @@ import com.liuguangqiang.asyncokhttp.AsyncOkHttp;
 import com.liuguangqiang.asyncokhttp.BaseResponseHandler;
 import com.shop_mart.R;
 import com.shop_mart.constants.Constant;
-import com.shop_mart.model.SignUpModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,8 +42,6 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.signUpTxt)
     TextView signUpText;
 
-    private ProgressDialog progressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +56,13 @@ public class LoginActivity extends AppCompatActivity {
             showToast("username or password field cannot be empty");
             return;
         }
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-        finish();
+
+        Map<String,String> requestMap = new HashMap<>();
+        requestMap.put("username",username.getText().toString());
+        requestMap.put("password", password.getText().toString());
+
+        sendRequest(requestMap);
+
     }
     @OnClick(R.id.signUpTxt)
     public void goToSignUp(){
@@ -83,24 +86,28 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void makeRequests(SignUpModel signUpModel) {
+    private void sendRequest(Map<String, String> request) {
+        final Dialog alertDialog = new Dialog(this);
+        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        alertDialog.setContentView(R.layout.loading);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.setCancelable(false);
+        alertDialog.show();
         final JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("username", signUpModel.getUsername());
-            jsonObject.put("email", signUpModel.getPassword());
-            jsonObject.put("email", signUpModel.getPassword());
-            jsonObject.put("email", signUpModel.getPassword());
+            jsonObject.put("username", request.get("username"));
+            jsonObject.put("password", request.get("password"));
 
             AsyncOkHttp okHttp = AsyncOkHttp.getInstance();
             okHttp.addHeader(Constant.HEADER_CONTENT_TYPE, Constant.CONTENT_TYPE);
             okHttp.post(Constant.LOG_URL, jsonObject.toString(), new BaseResponseHandler() {
                 @Override
                 public void onSuccess(int code, String responseString) {
-                    progressDialog.dismiss();
+                    alertDialog.dismiss();
                     try {
                         if (responseString != null) {
                             JSONObject jsonResponse = new JSONObject(responseString);
-                            if (jsonResponse.optBoolean("success")) {
+                            if (jsonResponse.optBoolean("status")) {
                                 JSONObject jsonData = jsonResponse.getJSONObject("data");
                                 String username = jsonData.getString("username");
                                 String email = jsonData.getString("email");
@@ -121,12 +128,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(int code, String responseString) {
-                    progressDialog.dismiss();
+                    alertDialog.dismiss();
                     try {
                         JSONObject response = new JSONObject(responseString);
                         if (!response.optBoolean("status")) {
                             String message = response.getString("message");
-                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                            showToast(message);
                         }
 
                     } catch (JSONException e) {

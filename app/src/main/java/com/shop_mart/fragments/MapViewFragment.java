@@ -10,18 +10,20 @@ import android.view.ViewGroup;
 
 import com.shop_mart.R;
 
-public class HomeFragment extends Fragment {
+
+public class MapViewFragment extends Fragment {
 
 
-    public HomeFragment() {}
+    public MapViewFragment() {
+        // Required empty public constructor
+    }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home,container,false);
-
-        return view;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_map_view, container, false);
     }
 
 }
