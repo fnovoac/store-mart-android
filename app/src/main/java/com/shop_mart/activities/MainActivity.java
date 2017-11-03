@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.shop_mart.R;
 import com.shop_mart.adapters.TabAdapter;
 import com.shop_mart.constants.Constant;
+import com.shop_mart.fragments.MapViewFragment;
 import com.shop_mart.fragments.StoreFragment;
 import com.shop_mart.listeners.CurrentLocationListener;
 import com.shop_mart.location.LocationTracker;
@@ -78,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private void setViewPageAdapter(ViewPager viewPager){
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
-        adapter.addFragment(new StoreFragment(),"Map View");
-        adapter.addFragment(new StoreFragment(),"Store list");
+        adapter.addFragment(new StoreFragment(),"Store List");
+        adapter.addFragment(new MapViewFragment(),"Map View");
         viewPager.setAdapter(adapter);
     }
 
